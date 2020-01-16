@@ -121,7 +121,7 @@ def handle(tornadoRequest):
 			if expireDate-int(time.time()) <= 86400*3:
 				expireDays = round((expireDate-int(time.time()))/86400)
 				expireIn = "{} days".format(expireDays) if expireDays > 1 else "less than 24 hours"
-				responseToken.enqueue(serverPackets.notification("Your donor tag expires in {}! When your donor tag expires, you won't have any of the donor privileges, like yellow username, custom badge and discord custom role and username color! If you wish to keep supporting Ripple and you don't want to lose your donor privileges, you can donate again by clicking on 'Support us' on Ripple's website.".format(expireIn)))
+				responseToken.enqueue(serverPackets.notification("Your donor tag expires in {}! When your donor tag expires, you won't have any of the donor privileges, like yellow username, custom badge and discord custom role and username color! If you wish to keep supporting Horizon and you don't want to lose your donor privileges, you can donate again by clicking on 'Support us' on Horizon's website.".format(expireIn)))
 
 		# Deprecate telegram 2fa and send alert
 		if userUtils.deprecateTelegram2Fa(userID):
@@ -161,7 +161,7 @@ def handle(tornadoRequest):
 				raise exceptions.banchoMaintenanceException()
 			else:
 				# We are mod/admin, send warning notification and continue
-				responseToken.enqueue(serverPackets.notification("Bancho is in maintenance mode. Only mods/admins have full access to the server.\nType !system maintenance off in chat to turn off maintenance mode."))
+				responseToken.enqueue(serverPackets.notification("You are choosen to join this server because of your permissions... now fix your shit and type !system maintenance off to let other players join the server again"))
 
 		# Send all needed login packets
 		responseToken.enqueue(serverPackets.silenceEndTime(silenceSeconds))
@@ -260,11 +260,11 @@ def handle(tornadoRequest):
 		responseData = bytes()
 		if responseToken is not None:
 			responseData = responseToken.queue
-		responseData += serverPackets.notification("Our bancho server is in maintenance mode. Please try to login again later.")
+		responseData += serverPackets.notification("Horizon is currently in maintenance mode to make your experience better! Please try again later :)")
 		responseData += serverPackets.loginFailed()
 	except exceptions.banchoRestartingException:
 		# Bancho is restarting
-		responseData += serverPackets.notification("Bancho is restarting. Try again in a few minutes.")
+		responseData += serverPackets.notification("Woah, wait a minute! Horizon is still starting")
 		responseData += serverPackets.loginFailed()
 	except exceptions.need2FAException:
 		# User tried to log in from unknown IP

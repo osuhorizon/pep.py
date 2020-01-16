@@ -72,13 +72,13 @@ def instantRestart(fro, chan, message):
 def faq(fro, chan, message):
 	# TODO: Unhardcode this
 	messages = {
-		"rules": "Please make sure to check (osu!thailand's rules)[https://ainu.pw/doc/rules].",
+		"rules": "Please make sure to check (osu!Horizon's rules)[https://lemres.de/doc/rules].",
 		"swearing": "Please don't abuse swearing",
 		"spam": "Please don't spam",
 		"offend": "Please don't offend other players",
-		"github": "(osu!Ainu's Github page!)[https://github.com/osuthailand]",
-		"discord": "(Join Ainu Discord!)[https://discord.gg/Qp3WQU8]",
-		"changelog": "Check the (changelog)[https://ainu.pw/changelog] !",
+		"github": "(osu!Horizon's Github page!)[https://github.com/osuthailand]",
+		"discord": "(Join Horizon Discord!)[https://discord.gg/YKhJ3Fn]",
+		"changelog": "Check the (changelog)[https://lemres.de/changelog] !",
 		"english": "Please keep this channel in english.",
 		"topic": "Can you please drop the topic and talk about something else?",
 		"lines": "Please try to keep your sentences on a single line to avoid getting silenced."
@@ -337,7 +337,7 @@ def unrestrict(fro, chan, message):
 
 def restartShutdown(restart):
 	"""Restart (if restart = True) or shutdown (if restart = False) pep.py safely"""
-	msg = "We are performing some maintenance. Bancho will {} in 5 seconds. Thank you for your patience.".format("restart" if restart else "shutdown")
+	msg = "We are performing some maintenance. Horizon will {} in 5 seconds. Thank you for your patience.".format("restart" if restart else "shutdown")
 	systemHelper.scheduleShutdown(5, restart, msg)
 	return msg
 
@@ -374,7 +374,7 @@ def systemMaintenance(fro, chan, message):
 				if not value.admin:
 					who.append(value.userID)
 
-		glob.streams.broadcast("main", serverPackets.notification("Our bancho server is in maintenance mode. Please try to login again later."))
+		glob.streams.broadcast("main", serverPackets.notification("Horizon is being in maintenance mode to make your experience better and fix some bugs."))
 		glob.tokens.multipleEnqueue(serverPackets.loginError(), who)
 		msg = "The server is now in maintenance mode!"
 	else:
@@ -1239,6 +1239,12 @@ def editMap(fro, chan, message): # Edit maps ranking status ingame. // Added by 
 	elif rankType == 'unrank':
 		rankTypeID = 0
 		freezeStatus = 0
+	elif rankType == 'love':
+		rankTypeID = 5
+		freezeStatus = 0
+	elif rankType == 'verify':
+		rankTypeID = 4
+		freezeStatus = 0
 		
 	# Grab beatmapData from db
 	try:
@@ -1265,7 +1271,7 @@ def editMap(fro, chan, message): # Edit maps ranking status ingame. // Added by 
 				beatmapData["beatmap_id"]))
 		typeBM = 'beatmap'
 	else:
-		return "Please specify whether it is a set/map. eg: '!map unrank/rank/love set/map 123456'"
+		return "Please specify whether it is a set/map. eg: '!map unrank/rank/love/verify set/map 123456'"
 	
 	# Announce that YOOOOOOO THIS MAP IS RANKED!!!
 	if rankType == "rank":
@@ -1437,7 +1443,7 @@ commands = [
 		"callback": report
 	}, {
 		"trigger": "!help",
-		"response": "Click (here)[https://ainu.pw/index.php?p=16&id=4] for full command list"
+		"response": "Click (here)[https://lemres.de/index.php?p=16&id=4] for full command list"
 	}, {
 		"trigger": "!ppboard",
 		"syntax": "<relax/vanilla>",
@@ -1463,7 +1469,7 @@ commands = [
 	#}, {
 	{
 		"trigger": "!map",
-		"syntax": "<rank/unrank> <set/map> <ID>",
+		"syntax": "<rank/unrank/love/verify> <set/map> <ID>",
 		"privileges": privileges.ADMIN_MANAGE_BEATMAPS,
 		"callback": editMap
 	}, {
